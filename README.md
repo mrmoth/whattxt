@@ -10,5 +10,5 @@ Requirements:
 =======
 Instructions:
 
-Add your what.cd username and password along with a phone number to forward messages to in settings.conf
-run the python script, it will prompt you for your google voice login info.
+Add your what.cd username and password along with a phone number to forward messages to in settings.conf.
+Run the python script, it will prompt you for your google voice login info.
