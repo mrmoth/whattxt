@@ -32,7 +32,7 @@ while True:
     if prevResponse != response:
         print "New text: %s" % response
         prevResponse = response
-        resp = parseResponse(response, apihandle)
+        resp = parseResponse(response, settings[0], apihandle)
         voice.send_sms(settings[2], resp)
 
     time.sleep(10)
