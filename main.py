@@ -1,12 +1,10 @@
 import whatapi
 from googlevoice import Voice
-from modules import checkInbox, extractInput
+from modules import checkInbox, extractInput, parseResponse
 import time
 
 config = open ('settings.conf', 'r')
 
-if len(settings[2]) != 12:
-       print "You need to add the country number thing\n(+1 in front of your number or something similar)"
 settings = config.read().split('\n')
 voice = Voice()
 voice.login()
@@ -18,6 +16,7 @@ apihandle = whatapi.WhatAPI(username=settings[0], password=settings[1])
 
 print "Ok, checking your inbox!"
 prevId = 0
+prevResponse = ''
 while True:
     newMessage = checkInbox(apihandle)
     if prevId != newMessage[3] and settings[0] != newMessage[0]:
@@ -27,6 +26,12 @@ while True:
         print "Sending message: ", messageText
 
         voice.send_sms(settings[2], messageText)
+
+    voice.sms()
+    response = extractInput(voice.sms.html)
+    if prevResponse != response:
+        prevResponse = response
+        parseResponse(response)
 
     time.sleep(10)
 
