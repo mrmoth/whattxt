@@ -18,13 +18,13 @@ def checkSubscriptions(apihandle):
     subscriptions = apihandle.request("subscriptions")[u'response'][u'threads']
     threads = []
     for thread in subscriptions:
-        threads.append([thread[u'threadTitle'],thread[u'threadId']])
+        threads.append([thread[u'threadTitle'],thread[u'threadId'], thread[u'lastPostId']])
     if len(threads) == 0:
         return "No new Subscriptions"
     message = ""
     for title in threads:
         message += title[0]+"\n"
-        posts = apihandle.request("forum", type="viewthread", threadid=title[1])[u'response'][u'posts']
+        posts = apihandle.request("forum", type="viewthread", threadid=title[1], postid=title[2])[u'response'][u'posts']
         message+=posts[-1][u'body']+"\n" #I'm only doing it this in case I figure out how to get the bottom code working so meh whatever.
         '''
         until I figure out how to get this to only add the last read posts it's pretty useless.

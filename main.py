@@ -19,6 +19,8 @@ prevId = 0
 prevResponse = ''
 while True:
     newMessage = checkInbox(apihandle)
+
+    #statements to let user know of new forum threads / etc.
     if prevId != newMessage[3] and settings[0] != newMessage[0]:
         prevId = newMessage[3]
         messageText = "%s - %s\n%s" % newMessage[0:3]
@@ -27,6 +29,7 @@ while True:
 
         voice.send_sms(settings[2], messageText)
 
+    #Checks for new text messages
     voice.sms()
     response = extractInput(voice.sms.html, settings[2])
     if prevResponse != response:
