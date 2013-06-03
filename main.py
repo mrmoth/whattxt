@@ -17,7 +17,7 @@ print "Ok, checking your inbox!"
 prevId = 0
 while True:
     newMessage = checkInbox(apihandle)
-    if prevId != newMessage[3]:
+    if prevId != newMessage[3] and settings[0] != newMessage[0]:
         prevId = newMessage[3]
         messageText = "%s - %s\n%s" % newMessage[0:3]
 
