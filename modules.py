@@ -8,7 +8,7 @@ def checkInbox(apihandle):
     message = apihandle.request("inbox", type="viewconv", id=unreadConvId)
     username = messages[0][u'username']
     subject = messages[0][u'subject']
-    messageId = message[u'response'][u'message'][-1][u'messageId']
+    messageId = message[u'response'][u'messages'][-1][u'messageId']
     body = message[u'response'][u'messages'][-1][u'body']
 
 
