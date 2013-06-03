@@ -71,7 +71,10 @@ def extractInput(htmlsms, number):
 
 def parseResponse(response, user, apihandle):
     response = response.lower().split(' ')
+    print response
     if 'top' in response[0]:
+        if len(response) == 1:
+            return topTen(apihandle, 'day')
         return topTen(apihandle, response[1])
     if 'ratio' in response[0]:
         if len(response)==1: #i.e., they didn't specify a name.
