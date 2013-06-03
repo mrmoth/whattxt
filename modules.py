@@ -14,7 +14,8 @@ def checkInbox(apihandle):
 
 
     return (username, subject, body, messageId)
-
+def checkSubscriptions(apihandle):
+    pass
 #This shit was taken from the documentation.
 def extractsms(htmlsms) :
     """
@@ -47,10 +48,14 @@ def extractInput(htmlsms, number):
     #only interested in latest message.
     return messages[-1][u'text']
 
-def parseResponse(response, apihandle):
-    response = response.split(' ')
+def parseResponse(response, user, apihandle):
+    response = response.lower().split(' ')
     if 'top' in response[0]:
         return topTen(apihandle, response[1])
+    if 'ratio' in response[0]:
+        if len(response)==1: #i.e., they didn't specify a name.
+            return ratio(apihandle, getUserId(apihandle, user))
+        return ratio(apihandle, getUserId(apihandle, response[1]))
     return "Not sure what that meant. Try again bud."
 
 def topTen(apihandle, period):
@@ -68,3 +73,17 @@ def topTen(apihandle, period):
     for bands in torrents:
         text += "%s - %s\n" % (bands[u'groupName'], bands[u'artist'])
     return text
+
+def ratio(apihandle, userid):
+    if userid == None:
+        return "That user wasn't found bud."
+    user = apihandle.request('user',id=userid)[u'response'][u'stats']
+    text = "ratio: %s\nUpload:%s, Download:%s" % (user[u'ratio'], user[u'uploaded'], user[u'downloaded'])
+    return text
+
+def getUserId(apihandle, user):
+    id = apihandle.request('usersearch', search=user)[u'response'][u'results']
+    if len(id)==0:
+        return None
+
+    return id[0][u'userId']
