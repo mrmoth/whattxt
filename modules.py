@@ -25,7 +25,7 @@ def checkSubscriptions(apihandle):
     for title in threads:
         message += title[0]+"\n"
         posts = apihandle.request("forum", type="viewthread", threadid=title[1])[u'response'][u'posts']
-        message+=posts[-1][u'body'] #I'm only doing it this in case I figure out how to get the bottom code working so meh whatever.
+        message+=posts[-1][u'body']+"\n" #I'm only doing it this in case I figure out how to get the bottom code working so meh whatever.
         '''
         until I figure out how to get this to only add the last read posts it's pretty useless.
         for post in posts:
