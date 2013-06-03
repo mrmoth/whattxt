@@ -3,14 +3,13 @@ def checkInbox(apihandle):
     messages = apihandle.request("inbox", sort="unread")[u'response'][u'messages']
     print messages
     #already read, don't need to send a new txt
-    if not messages[0][u'unread']:
-        return None
-
     #variables to make it look pretty c:
-    unread_id = messages[0][u'convId']
-    message = apihandle.request("inbox", type="viewconv", id=unread_id)
+    unreadConvId = messages[0][u'convId']
+    message = apihandle.request("inbox", type="viewconv", id=unreadConvId)
     username = messages[0][u'username']
     subject = messages[0][u'subject']
+    messageId = message[u'response'][u'message'][-1][u'messageId']
     body = message[u'response'][u'messages'][-1][u'body']
 
-    return (username, subject, body, unread_id)
+
+    return (username, subject, body, messageId)
