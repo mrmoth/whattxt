@@ -13,8 +13,29 @@ def checkInbox(apihandle):
     body = message[-1][u'body']
 
 
-    return (username, subject, body, messageId)
+    return (username, subject, stripHtmlTags(body), messageId)
 def checkSubscriptions(apihandle):
+    subscriptions = apihandle.request("subscriptions")[u'response'][u'threads']
+    threads = []
+    for thread in subscriptions:
+        threads.append([thread[u'threadTitle'],thread[u'threadId']])
+    if len(threads) == 0:
+        return "No new Subscriptions"
+    message = ""
+    for title in threads:
+        message += title[0]+"\n"
+        posts = apihandle.request("forum", type="viewthread", threadid=title[1])[u'response'][u'posts']
+        message+=posts[-1][u'body'] #I'm only doing it this in case I figure out how to get the bottom code working so meh whatever.
+        '''
+        until I figure out how to get this to only add the last read posts it's pretty useless.
+        for post in posts:
+            message += post[u'body']+"\n"
+            '''
+    return (stripHtmlTags(message), threads)
+
+
+
+
     pass
 #This shit was taken from the documentation.
 def extractsms(htmlsms) :
@@ -56,6 +77,8 @@ def parseResponse(response, user, apihandle):
         if len(response)==1: #i.e., they didn't specify a name.
             return ratio(apihandle, getUserId(apihandle, user))
         return ratio(apihandle, getUserId(apihandle, response[1]))
+    if 'sub' in response[0]:
+        return checkSubscriptions(apihandle)
     return "Not sure what that meant. Try again bud."
 
 def topTen(apihandle, period):
@@ -87,3 +110,10 @@ def getUserId(apihandle, user):
         return None
 
     return id[0][u'userId']
+
+#found this shit on stackoverflow
+def stripHtmlTags(htmlTxt):
+    if htmlTxt is None:
+        return None
+    else:
+        return ''.join(BeautifulSoup.BeautifulSoup(htmlTxt).findAll(text=True))
