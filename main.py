@@ -6,7 +6,7 @@ import time
 config = open ('settings.conf', 'r')
 settings = config.read().split('\n')
 voice = Voice()
-#voice.login()
+voice.login()
 
 #access what.CD API
 apihandle = whatapi.WhatAPI(username=settings[0], password=settings[1])
