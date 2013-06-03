@@ -78,7 +78,7 @@ def parseResponse(response, user, apihandle):
             return ratio(apihandle, getUserId(apihandle, user))
         return ratio(apihandle, getUserId(apihandle, response[1]))
     if 'sub' in response[0]:
-        return checkSubscriptions(apihandle)
+        return checkSubscriptions(apihandle)[0]
     return "Not sure what that meant. Try again bud."
 
 def topTen(apihandle, period):
