@@ -1,6 +1,8 @@
 import whatapi
 from googlevoice import Voice
-from modules import checkInbox, extractInput, parseResponse
+from modules import extractInput
+from sender import checkInbox
+import responder
 import time
 
 config = open ('settings.conf', 'r')
@@ -11,7 +13,7 @@ voice.login()
 
 #access what.CD API
 apihandle = whatapi.WhatAPI(username=settings[0], password=settings[1])
-
+responder = responder.textResponses(apihandle, settings[0])
 
 
 print "Ok, checking your inbox!"
@@ -35,7 +37,7 @@ while True:
     if prevResponse != response:
         print "New text: %s" % response
         prevResponse = response
-        resp = parseResponse(response, settings[0], apihandle)
+        resp = responder.parseResponse(response)
         voice.send_sms(settings[2], resp)
 
     time.sleep(10)
