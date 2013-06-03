@@ -47,5 +47,24 @@ def extractInput(htmlsms, number):
     #only interested in latest message.
     return messages[-1][u'text']
 
-def parseResponse(response):
-    pass
+def parseResponse(response, apihandle):
+    response = response.split(' ')
+    if 'top' in response[0]:
+        return topTen(apihandle, response[1])
+    return "Not sure what that meant. Try again bud."
+
+def topTen(apihandle, period):
+    top = apihandle.request('top10')
+    index = 0
+    if 'week' in period:
+        index = 1
+    elif 'all' in period:
+        index = 2
+    elif 'year' in period:
+        index = 3
+
+    text = top[u'response'][index][u'caption']+"\n"
+    torrents = top[u'response'][index][u'results']
+    for bands in torrents:
+        text += "%s - %s\n" % (bands[u'groupName'], bands[u'artist'])
+    return text
