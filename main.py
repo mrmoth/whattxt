@@ -28,11 +28,12 @@ while True:
         voice.send_sms(settings[2], messageText)
 
     voice.sms()
-    response = extractInput(voice.sms.html)
+    response = extractInput(voice.sms.html, settings[2])
     if prevResponse != response:
+        print "New text: %s" % response
         prevResponse = response
-        parseResponse(response)
+        resp = parseResponse(response, apihandle)
+        voice.send_sms(settings[2], resp)
 
     time.sleep(10)
-
 
