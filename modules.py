@@ -104,7 +104,7 @@ def ratio(apihandle, userid):
     if userid == None:
         return "That user wasn't found bud."
     user = apihandle.request('user',id=userid)[u'response'][u'stats']
-    text = "ratio: %s\nUpload:%s, Download:%s" % (user[u'ratio'], user[u'uploaded'], user[u'downloaded'])
+    text = "ratio: %s\nUpload:%s, Download:%s" % (user[u'ratio'], sizeof_fmt(int(user[u'uploaded'])), sizeof_fmt(int(user[u'downloaded'])))
     return text
 
 def getUserId(apihandle, user):
@@ -120,3 +120,10 @@ def stripHtmlTags(htmlTxt):
         return None
     else:
         return ''.join(BeautifulSoup.BeautifulSoup(htmlTxt).findAll(text=True))
+
+def sizeof_fmt(num):
+    for x in ['bytes','KB','MB','GB']:
+        if num < 1024.0:
+            return "%3.1f%s" % (num, x)
+        num /= 1024.0
+    return "%3.1f%s" % (num, 'TB')
