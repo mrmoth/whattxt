@@ -16,5 +16,5 @@ Run the python script, it will prompt you for your google voice login info.
 =======
 Commands:
 
-ratio [username] - checks the ratio of a user, if blank gives your ratio
-top10 [day|week|all] - gives the top10 list
+*   ratio [username] - checks the ratio of a user, if blank gives your ratio
+*   top10 [day|week|all] - gives the top10 list
