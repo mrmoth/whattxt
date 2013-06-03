@@ -13,7 +13,8 @@ Instructions:
 Add your what.cd username and password along with a phone number to forward messages to in settings.conf.
 Run the python script, it will prompt you for your google voice login info.
 
-If you want to be able to use the commands below, your phone number needs to appear as your phone number in your google contacts.
+If you want to be able to use the commands below, your phone number needs to appear as your phone number in your google contacts. that is,
+don't add it to your contacts list as "me" or "joe" or what have you, just keep it blank so it shows it as unnamed.
 
 =======
 Commands:
