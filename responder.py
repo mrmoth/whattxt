@@ -16,7 +16,7 @@ class textResponses(object):
                 return self.ratio()
             return self.ratio()
         if 'sub' in response[0]:
-            return self.checkSubscriptions(self.apihandle)[0]
+            return self.checkSubscriptions()
 
     def topTen(self, period='day'):
         top = self.apihandle.request('top10')
@@ -56,7 +56,7 @@ class textResponses(object):
             for post in posts:
                 message += post[u'body']+"\n"
             '''
-        return (stripHtmlTags(message), threads)
+        return (stripHtmlTags(message))
 
 
     def ratio(self):
